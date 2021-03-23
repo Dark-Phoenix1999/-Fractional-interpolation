@@ -6,22 +6,26 @@
 #include<Windows.h>
 #include<iostream>
 
+double fun(double x) {
+	return (1 + 2 * x - 3 * x * x + 4 * x * x * x) / (5 - 6 * x + 7 * x * x);
+}
+
 using namespace std;
 int main()
 {
 	system("color 02");
 	setlocale(LC_ALL, "RUS");
-	int i, j, n, k, l,l1, g = 0;
+	int i, j, n, k, l, l1, g = 0;
 	//создаем массив
 	cout << "введи порядок числителя: ";
 	cin >> k;
 	cout << "введи порядок знаменателя: ";
 	cin >> l1;
 	n = k + l1 + 1;
-	float matrix[100][100];
-	float x[1000];
-	float fx[1000];
-	float* cat = new float[n];
+	double matrix[100][100];
+	double x[1000];
+	double fx[1000];
+	double* cat = new double[n];
 	//инициализируем
 	for (i = 0; i < n; i++)
 	{
@@ -30,18 +34,19 @@ int main()
 	}
 	for (i = 0; i < n; i++)
 	{
-		cout << "fx " << "[" << i + 1 << " ]: ";
-		cin >> fx[i];
+		fx[i] = fun(x[i]);
 	}
 	for (i = 0; i < n; i++)
 		for (j = 0; j < n; j++)
 		{
 			if (j < k)
-				matrix[i][j] = pow(x[i], i + 1);
+			{
+				matrix[i][j] = pow(x[i], j + 1);
+			}
 			else
-				matrix[i][j] =x[i]*pow(fx[i], i);
+				matrix[i][j] = -fx[i] * pow(x[i], j - k);
 		}
-	
+
 	for (i = 0; i < n; i++)
 	{
 		cat[i] = -1;
@@ -56,10 +61,10 @@ int main()
 		cout << endl;
 	}
 	cout << endl;
-	float kaif, up, daun;
+	double kaif, up, daun;
 	//Метод Гаусса
-	float tmp, xx[100];
-	int k;
+	double tmp, xx[100];
+	int k1;
 	for (i = 0; i < n; i++)
 	{
 		g = 0;
@@ -84,25 +89,15 @@ int main()
 			cat[l] = daun;
 		}
 		g = 0;
-		/* cout << "matrix: " << endl;
-		for ( k= 0; k<n; k++)
-		{
-		for (j = 0; j<m; j++)
-		cout << matrix[k][j] << " ";
-		cout << cat[k] << " ";
-		cout << endl;
-		}
-		cout << endl;*/
-		//проверка
 		for (j = 0; j <= n; j++)
 			matrix[i][j] /= tmp;
 		cat[i] /= tmp;
-		for (k = i + 1; k < n; k++)
+		for (k1 = i + 1; k1 < n; k1++)
 		{
-			tmp = matrix[k][i];
+			tmp = matrix[k1][i];
 			for (j = 0; j < n; j++)
-				matrix[k][j] = matrix[k][j] / tmp - matrix[i][j];
-			cat[k] = cat[k] / tmp - cat[i];
+				matrix[k1][j] = matrix[k1][j] / tmp - matrix[i][j];
+			cat[k1] = cat[k1] / tmp - cat[i];
 		}
 	}
 	for (i = n - 1; i >= 0; i--)
@@ -113,17 +108,19 @@ int main()
 			for (j = n - 1; j >= 0; j--)
 				matrix[i][j] /= tmp;
 			cat[i] /= tmp;
-			for (k = i - 1; k >= 0; k--)
+			for (k1 = i - 1; k1 >= 0; k1--)
 			{
-				if (matrix[k][i] != 0) {
-					tmp = matrix[k][i];
+				if (matrix[k1][i] != 0) {
+					tmp = matrix[k1][i];
 					for (j = n - 1; j >= 0; j--)
-						matrix[k][j] = matrix[k][j] / tmp - matrix[i][j];
-					cat[k] = cat[k] / tmp - cat[i];
+						matrix[k1][j] = matrix[k1][j] / tmp - matrix[i][j];
+					cat[k1] = cat[k1] / tmp - cat[i];
 				}
 			}
 		}
 	}
+
+	
 	cout << "matrix: " << endl;
 	for (i = 0; i < n; i++)
 	{

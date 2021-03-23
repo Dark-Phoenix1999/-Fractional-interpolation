@@ -1,0 +1,4 @@
+﻿  metodGausZadanie.cpp
+C:\Users\PHOENIX\Desktop\c++\metodGausZadanie\metodGausZadanie\metodGausZadanie.cpp(64,9): warning C4101: kaif: неиспользованная локальная переменная
+C:\Users\PHOENIX\Desktop\c++\metodGausZadanie\metodGausZadanie\metodGausZadanie.cpp(66,14): warning C4101: xx: неиспользованная локальная переменная
+  metodGausZadanie.vcxproj -> C:\Users\PHOENIX\Desktop\c++\metodGausZadanie\Debug\metodGausZadanie.exe
